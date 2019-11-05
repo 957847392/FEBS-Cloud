@@ -77,10 +77,19 @@ public class FebsGatewayRequestFilter implements GlobalFilter {
         }
     }
 
+
+    /**
+     * 检查该URI 是否被禁止访问
+     * @param request
+     * @param response
+     * @return
+     */
     private Mono<Void> checkForbidUri(ServerHttpRequest request, ServerHttpResponse response) {
+
         String uri = request.getPath().toString();
         boolean shouldForward = true;
         String forbidRequestUri = properties.getForbidRequestUri();
+
         String[] forbidRequestUris = StringUtils.splitByWholeSeparatorPreserveAllTokens(forbidRequestUri, ",");
         if (forbidRequestUris != null && ArrayUtils.isNotEmpty(forbidRequestUris)) {
             for (String u : forbidRequestUris) {
